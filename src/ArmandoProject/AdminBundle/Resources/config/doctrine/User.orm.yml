@@ -1,0 +1,51 @@
+ArmandoProject\AdminBundle\Entity\User:
+    type: entity
+    table: null
+    repositoryClass: ArmandoProject\AdminBundle\Repository\UserRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        userName:
+            type: string
+            length: '50'
+            column: UserName
+        firstName:
+            type: string
+            length: '50'
+            column: FirstName
+        displayName:
+            type: string
+            length: '100'
+            column: DisplayName
+        mobilePhone:
+            type: string
+            length: '15'
+            unique: true
+            column: MobilePhone
+        address:
+            type: string
+            length: 255
+            column: Address
+        city:
+            type: string
+            length: 255
+            column: City
+        stateOrProvince:
+            type: string
+            length: 255
+            column: StateOrProvince
+        postalCode:
+            type: integer
+            column: PostalCode
+        countryOrRegion:
+            type: string
+            length: 255
+            column: CountryOrRegion
+        photo:
+            type: object
+            column: Photo
+    lifecycleCallbacks: {  }
