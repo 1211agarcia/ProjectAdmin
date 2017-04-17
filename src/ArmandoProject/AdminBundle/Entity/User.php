@@ -2,20 +2,24 @@
 
 namespace ArmandoProject\AdminBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
+use ArmandoProject\AdminBundle\Entity\Photo;
+
 /**
  * User
  */
-class User
+class User extends BaseUser
 {
     /**
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $userName;
+    private $name;
 
     /**
      * @var string
@@ -26,6 +30,11 @@ class User
      * @var string
      */
     private $displayName;
+    
+    /**
+     * @var boolean
+     */
+    private $gender;
 
     /**
      * @var string
@@ -58,10 +67,50 @@ class User
     private $countryOrRegion;
 
     /**
-     * @var \stdClass
+     * @var \ArmandoProject\AdminBundle\Entity\Photo $profilePhoto
      */
-    private $photo;
+    private $profilePhoto;
 
+    /**
+     * @var datetime $created
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+
+    /**
+     * @var datetime $updated
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
+
+
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
+        $this->profilePhoto = new Photo();
+        $this->created = new \DateTime();
+        $this->updated = new \DateTime();
+    }
+
+    /**
+     * @ORM\PostPersist()
+     */
+    public function postCreated()
+    {
+        $this->created = new \DateTime();
+        $this->updated = new \DateTime();
+    }
+    /**
+     * @ORM\PostUpdate()
+     */
+    public function postUpdated()
+    {
+        $this->updated = new \DateTime();
+    }
 
     /**
      * Get id
@@ -74,27 +123,27 @@ class User
     }
 
     /**
-     * Set userName
+     * Set name
      *
-     * @param string $userName
+     * @param string $name
      *
      * @return User
      */
-    public function setUserName($userName)
+    public function setName($name)
     {
-        $this->userName = $userName;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get userName
+     * Get name
      *
      * @return string
      */
-    public function getUserName()
+    public function getName()
     {
-        return $this->userName;
+        return $this->$name;
     }
 
     /**
@@ -289,28 +338,103 @@ class User
         return $this->countryOrRegion;
     }
 
+    public function __toString() {
+        return $this->displayName;
+    }
+
     /**
-     * Set photo
+     * Set gender
      *
-     * @param \stdClass $photo
+     * @param boolean $gender
      *
      * @return User
      */
-    public function setPhoto($photo)
+    public function setGender($gender)
     {
-        $this->photo = $photo;
+        $this->gender = $gender;
 
         return $this;
     }
 
     /**
-     * Get photo
+     * Get gender
      *
-     * @return \stdClass
+     * @return boolean
      */
-    public function getPhoto()
+    public function getGender()
     {
-        return $this->photo;
+        return $this->gender;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return User
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     *
+     * @return User
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Set profilePhoto
+     *
+     * @param \ArmandoProject\AdminBundle\Entity\Photo $profilePhoto
+     *
+     * @return User
+     */
+    public function setProfilePhoto(\ArmandoProject\AdminBundle\Entity\Photo $profilePhoto = null)
+    {
+        $this->profilePhoto = $profilePhoto;
+
+        return $this;
+    }
+
+    /**
+     * Get profilePhoto
+     *
+     * @return \ArmandoProject\AdminBundle\Entity\Photo
+     */
+    public function getProfilePhoto()
+    {
+        return $this->profilePhoto;
     }
 }
-

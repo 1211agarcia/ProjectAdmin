@@ -1,0 +1,11 @@
+#imports:
+#    - { resource: "@AdminBundle/Resources/config/security.yml" }
+#    - { resource: "@AdminBundle/Resources/config/services.yml" }
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb' and 'couchdb'
+    firewall_name: main
+    user_class: ArmandoProject\AdminBundle\Entity\User
+    from_email:
+        address: "%mailer_user%"
+        sender_name: "%mailer_user%"

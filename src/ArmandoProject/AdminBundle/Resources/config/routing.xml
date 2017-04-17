@@ -7,4 +7,8 @@
     <route id="admin_homepage" path="/">
         <default key="_controller">AdminBundle:Default:index</default>
     </route>
+    <import resource="@FOSUserBundle/Resources/config/routing/all.xml"/>
+
+
+    
 </routes>

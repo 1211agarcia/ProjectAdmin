@@ -1,6 +1,6 @@
 ArmandoProject\AdminBundle\Entity\User:
     type: entity
-    table: null
+    table: fos_user
     repositoryClass: ArmandoProject\AdminBundle\Repository\UserRepository
     id:
         id:
@@ -9,43 +9,59 @@ ArmandoProject\AdminBundle\Entity\User:
             generator:
                 strategy: AUTO
     fields:
-        userName:
+        name:
             type: string
             length: '50'
-            column: UserName
+            column: name
         firstName:
             type: string
             length: '50'
-            column: FirstName
+            column: firstName
         displayName:
             type: string
             length: '100'
-            column: DisplayName
+            column: displayName
+        gender:
+            type: boolean
+            column: gender
         mobilePhone:
             type: string
             length: '15'
-            unique: true
-            column: MobilePhone
+            nullable: true
+            column: mobilePhone
         address:
             type: string
             length: 255
-            column: Address
+            column: address
         city:
             type: string
             length: 255
-            column: City
+            nullable: true
+            column: city
         stateOrProvince:
             type: string
             length: 255
-            column: StateOrProvince
+            nullable: true
+            column: stateOrProvince
         postalCode:
             type: integer
-            column: PostalCode
+            nullable: true
+            column: postalCode
         countryOrRegion:
             type: string
+            nullable: true
             length: 255
-            column: CountryOrRegion
-        photo:
-            type: object
-            column: Photo
+            column: countryOrRegion
+        created:
+            type: datetime
+            column: created
+        updated:
+            type: datetime
+            column: updated
+    oneToOne:
+        profilePhoto:
+            targetEntity: Photo
+            joinColumn:
+                name: photo_id
+                referencedColumnName: id
     lifecycleCallbacks: {  }

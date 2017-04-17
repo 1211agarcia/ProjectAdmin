@@ -1,4 +1,4 @@
-admin:
+admin_user:
     resource: "@AdminBundle/Resources/config/routing.xml"
     prefix:   /
 
