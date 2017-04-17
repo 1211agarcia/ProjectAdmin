@@ -32,6 +32,7 @@ ArmandoProject\AdminBundle\Entity\User:
         address:
             type: string
             length: 255
+            nullable: true
             column: address
         city:
             type: string
@@ -58,10 +59,22 @@ ArmandoProject\AdminBundle\Entity\User:
         updated:
             type: datetime
             column: updated
-    oneToOne:
-        profilePhoto:
-            targetEntity: Photo
-            joinColumn:
-                name: photo_id
-                referencedColumnName: id
-    lifecycleCallbacks: {  }
+        profilePhotoName:
+            type: string
+            nullable: true
+            length: 255
+            column: profilePhotoName
+        profilePhotoSize:
+            type: integer
+            nullable: true
+            column: profilePhotoSize
+#    oneToOne:
+#        profilePhoto:
+#            targetEntity: Photo
+#            joinColumn:
+#                name: photo_id
+#                referencedColumnName: id
+#                cascade: ["persist", "remove"]
+    lifecycleCallbacks:
+        postPersist: [ postCreated ]
+        postUpdate: [ postUpdated ]

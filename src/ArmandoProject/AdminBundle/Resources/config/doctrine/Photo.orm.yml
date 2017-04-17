@@ -21,7 +21,10 @@ ArmandoProject\AdminBundle\Entity\Photo:
         name:
             type: string
             length: 255
-        file:
-            type: string
-            length: 255
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks:
+        prePersist: [ preUpload ]
+        postPersist: [ upload ]
+        preUpdate: [ preUpload ]
+        postUpdate: [ upload ]
+        postRemove: [ removeUpload ]
+

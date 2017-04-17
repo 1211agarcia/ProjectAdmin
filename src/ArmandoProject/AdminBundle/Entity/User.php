@@ -2,12 +2,15 @@
 
 namespace ArmandoProject\AdminBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
-use ArmandoProject\AdminBundle\Entity\Photo;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * User
+ * @Vich\Uploadable
  */
 class User extends BaseUser
 {
@@ -67,37 +70,44 @@ class User extends BaseUser
     private $countryOrRegion;
 
     /**
-     * @var \ArmandoProject\AdminBundle\Entity\Photo $profilePhoto
-     */
-    private $profilePhoto;
-
-    /**
      * @var datetime $created
-     *
-     * @ORM\Column(type="datetime")
      */
     private $created;
 
-
     /**
      * @var datetime $updated
-     *
-     * @ORM\Column(type="datetime")
      */
     private $updated;
+
+    /*********************/
+    /*** Profile Photo ***/
+    /*********************/
+
+    /**
+     * @var File
+     */
+    private $profilePhotoFile;
+    /**
+     * @var string
+     */
+    private $profilePhotoName;
+
+    /**
+     * @var integer
+     */
+    private $profilePhotoSize;
 
 
     public function __construct()
     {
         parent::__construct();
         // your own logic
-        $this->profilePhoto = new Photo();
         $this->created = new \DateTime();
         $this->updated = new \DateTime();
+
     }
 
     /**
-     * @ORM\PostPersist()
      */
     public function postCreated()
     {
@@ -105,7 +115,6 @@ class User extends BaseUser
         $this->updated = new \DateTime();
     }
     /**
-     * @ORM\PostUpdate()
      */
     public function postUpdated()
     {
@@ -143,7 +152,7 @@ class User extends BaseUser
      */
     public function getName()
     {
-        return $this->$name;
+        return $this->name;
     }
 
     /**
@@ -414,27 +423,95 @@ class User extends BaseUser
         return $this->updated;
     }
 
+    /*********************/
+    /*** Profile Photo ***/
+    /*********************/
+
     /**
-     * Set profilePhoto
      *
-     * @param \ArmandoProject\AdminBundle\Entity\Photo $profilePhoto
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $profilePhoto
      *
      * @return User
      */
-    public function setProfilePhoto(\ArmandoProject\AdminBundle\Entity\Photo $profilePhoto = null)
+    public function setProfilePhotoFile(File $profilePhotoFile = null)
     {
-        $this->profilePhoto = $profilePhoto;
+        $this->profilePhotoFile = $profilePhotoFile;
 
         return $this;
     }
 
     /**
-     * Get profilePhoto
-     *
-     * @return \ArmandoProject\AdminBundle\Entity\Photo
+     * @return File|null
      */
+    public function getProfilePhotoFile()
+    {
+        return $this->profilePhotoFile;
+    }
+
+    /**
+     * @param string $profilePhotoName
+     *
+     * @return User
+     */
+    public function setProfilePhotoName($profilePhotoName)
+    {
+        $this->profilePhotoName = $profilePhotoName;
+        
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProfilePhotoName()
+    {
+        return $this->profilePhotoName;
+    }
+    
+    /**
+     * @param integer $profilePhotoSize
+     *
+     * @return User
+     */
+    public function setProfilePhotoSize($profilePhotoSize)
+    {
+        $this->profilePhotosize = $profilePhotoSize;
+        
+        return $this;
+    }
+
+    /**
+     * @return integer|null
+     */
+    public function getProfilePhotoSize()
+    {
+        return $this->profilePhotoSize;
+    }
+   
+
+    /* *
+     * @return File|null
+     *
+    public function getProfilePhotoFile()
+    {
+        return $this->profilePhotoFile;
+    }
+
+    **
+     * @param EmbeddedFile $profilePhoto
+     *
+    public function setProfilePhoto(EmbeddedFile $profilePhoto)
+    {
+        $this->profilePhoto = $profilePhoto;
+    }
+
+    **
+     * @return EmbeddedFile
+     *
     public function getProfilePhoto()
     {
         return $this->profilePhoto;
-    }
+    }*/
 }
+
+
